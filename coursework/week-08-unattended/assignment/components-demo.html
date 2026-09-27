@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 8 - Reusable Components Demo</title>
+<style>
+  body { font-family: sans-serif; max-width: 700px; margin: 40px auto; }
+  .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .card h3 { margin-top: 0; }
+  button { padding: 8px 14px; border: none; border-radius: 4px; background: #2d6cdf; color: white; cursor: pointer; margin-right: 8px; }
+  button:hover { background: #1d4fb0; }
+  section { margin-bottom: 32px; }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+// Reusable Button component - takes a label and an onClick handler as props
+function Button({ label, onClick }) {
+  return <button onClick={onClick}>{label}</button>;
+}
+
+// Reusable Card component - takes a title and body text as props
+function Card({ title, children }) {
+  return (
+    <div className="card">
+      <h3>{title}</h3>
+      <p>{children}</p>
+    </div>
+  );
+}
+
+function App() {
+  const [message, setMessage] = React.useState("");
+
+  return (
+    <div>
+      <section>
+        <h2>Button reused for different actions</h2>
+        <Button label="Say Hello" onClick={() => setMessage("Hello!")} />
+        <Button label="Say Bye" onClick={() => setMessage("Bye!")} />
+        <Button label="Clear" onClick={() => setMessage("")} />
+        <p>{message}</p>
+      </section>
+
+      <section>
+        <h2>Card reused with different content</h2>
+        <Card title="HTML & CSS">Learn semantic tags, flexbox and responsive layout.</Card>
+        <Card title="JavaScript">Handle events, arrays and DOM manipulation.</Card>
+        <Card title="React">Build reusable components with JSX and state.</Card>
+      </section>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+
+</body>
+</html>

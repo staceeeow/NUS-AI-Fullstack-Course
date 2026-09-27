@@ -1,0 +1,15 @@
+mysql> SELECT * FROM instructors;
++----+----------------+--------------------+-------------------------+
+| id | name           | email              | department              |
++----+----------------+--------------------+-------------------------+
+|  1 | Dr. Mei Lin    | mei.lin@lms.edu    | Computer Science        |
+|  2 | Dr. Arun Kumar | arun.kumar@lms.edu | Data Science            |
+|  3 | Dr. Wei Zhang  | wei.zhang@lms.edu  | Artificial Intelligence |
++----+----------------+--------------------+-------------------------+
+
+mysql> SELECT users.name AS student_name, courses.title AS course_title, instructors.name AS instructor_name, enrollments.enrolled_at FROM enrollments JOIN users ON enrollments.user_id = users.id JOIN courses ON enrollments.course_id = courses.id JOIN instructors ON courses.instructor_id = instructors.id;
++--------------+-----------------------+-----------------+---------------------+
+| student_name | course_title          | instructor_name | enrolled_at         |
++--------------+-----------------------+-----------------+---------------------+
+| Cara Ong     | AI & Machine Learning | Dr. Wei Zhang   | 2026-09-27 11:41:33 |
++--------------+-----------------------+-----------------+---------------------+

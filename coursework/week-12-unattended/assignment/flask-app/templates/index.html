@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Week 12 - Flask + Jinja2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Student Records (Flask + Jinja2 + SQLite)</h1>
+  <p class="visits">You've visited this page {{ visits }} time(s) this session.</p>
+  <a href="{{ url_for('new_student') }}">+ Add Student</a>
+  <table>
+    <tr>
+      <th>ID</th><th>Name</th><th>Email</th><th>Program</th><th>Actions</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+      <td>{{ student.id }}</td>
+      <td>{{ student.name }}</td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.program }}</td>
+      <td>
+        <a href="{{ url_for('edit_student', student_id=student.id) }}">Edit</a>
+        <form action="{{ url_for('delete_student', student_id=student.id) }}" method="POST" style="display:inline">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

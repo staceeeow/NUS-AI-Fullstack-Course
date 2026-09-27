@@ -1,0 +1,128 @@
+{
+  "info": {
+    "name": "Student REST API - Week 14",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /students",
+      "request": { "method": "GET", "url": "http://localhost:3000/students" },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+          "pm.test('Response is an array', () => Array.isArray(pm.response.json()));"
+        ]}
+      }]
+    },
+    {
+      "name": "GET /students/:id",
+      "request": { "method": "GET", "url": "http://localhost:3000/students/1" },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+          "pm.test('Body has id 1', () => pm.response.json().id === 1);"
+        ]}
+      }]
+    },
+    {
+      "name": "GET /students/:id (not found)",
+      "request": { "method": "GET", "url": "http://localhost:3000/students/999" },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 404', () => pm.response.to.have.status(404));"
+        ]}
+      }]
+    },
+    {
+      "name": "POST /students",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/students",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Cara Ong\",\n  \"email\": \"cara@example.com\",\n  \"program\": \"AI\"\n}"
+        }
+      },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 201', () => pm.response.to.have.status(201));",
+          "pm.test('New student has an id', () => pm.response.json().id !== undefined);"
+        ]}
+      }]
+    },
+    {
+      "name": "POST /students (invalid - missing fields)",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:3000/students",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"\"\n}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 400', () => pm.response.to.have.status(400));"
+        ]}
+      }]
+    },
+    {
+      "name": "PUT /students/:id",
+      "request": {
+        "method": "PUT",
+        "url": "http://localhost:3000/students/1",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alice T.\",\n  \"email\": \"alice2@example.com\",\n  \"program\": \"CS\"\n}"
+        }
+      },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+          "pm.test('Name was updated', () => pm.response.json().name === 'Alice T.');"
+        ]}
+      }]
+    },
+    {
+      "name": "PUT /students/:id (not found)",
+      "request": {
+        "method": "PUT",
+        "url": "http://localhost:3000/students/999",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"x\",\n  \"email\": \"x\",\n  \"program\": \"x\"\n}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 404', () => pm.response.to.have.status(404));"
+        ]}
+      }]
+    },
+    {
+      "name": "DELETE /students/:id",
+      "request": { "method": "DELETE", "url": "http://localhost:3000/students/2" },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 200', () => pm.response.to.have.status(200));"
+        ]}
+      }]
+    },
+    {
+      "name": "DELETE /students/:id (not found)",
+      "request": { "method": "DELETE", "url": "http://localhost:3000/students/999" },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status code is 404', () => pm.response.to.have.status(404));"
+        ]}
+      }]
+    }
+  ]
+}

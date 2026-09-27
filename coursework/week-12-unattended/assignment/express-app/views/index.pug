@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+  head
+    title Week 12 - Express + Pug
+    link(rel="stylesheet", href="/style.css")
+  body
+    h1 Student Records (Express + Pug + SQLite)
+    p.visits You've visited this page #{visits} time(s) this session.
+    a(href="/students/new") + Add Student
+    table
+      tr
+        th ID
+        th Name
+        th Email
+        th Program
+        th Actions
+      each student in students
+        tr
+          td= student.id
+          td= student.name
+          td= student.email
+          td= student.program
+          td
+            a(href=`/students/${student.id}/edit`) Edit
+            |
+            form(action=`/students/${student.id}/delete`, method="POST", style="display:inline")
+              button(type="submit") Delete

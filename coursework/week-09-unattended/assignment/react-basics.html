@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 9 - React Basics</title>
+</head>
+<body>
+
+<!-- Task 2b: root div for React to render into -->
+<div id="root"></div>
+
+<!-- Task 2a: CDN links for React and ReactDOM -->
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+  // Task 3a: functional component returning a JSX element
+  function GreetingComponent() {
+    return <h1>Hello, welcome to React!</h1>;
+  }
+
+  // Task 4a & 4b: component rendering a heading and a list of at least 3 items using JSX
+  function ToDoList() {
+    const items = ["Finish React assignment", "Review JSX syntax", "Practice functional components"];
+    return (
+      <div>
+        <h2>My To-Do List</h2>
+        <ul>
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  function App() {
+    return (
+      <div>
+        <GreetingComponent />
+        <ToDoList />
+      </div>
+    );
+  }
+
+  // Task 2c / Task 3b: render using ReactDOM.render()
+  ReactDOM.render(<App />, document.getElementById("root"));
+
+</script>
+
+</body>
+</html>

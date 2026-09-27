@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Week 12 - {{ "Edit" if student else "Add" }} Student</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>{{ "Edit Student" if student else "Add Student" }}</h1>
+  <form method="POST">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" value="{{ student.name if student else '' }}" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="{{ student.email if student else '' }}" required>
+
+    <label for="program">Program</label>
+    <input type="text" id="program" name="program" value="{{ student.program if student else '' }}" required>
+
+    <button type="submit">Save</button>
+  </form>
+  <a href="{{ url_for('index') }}">Back to list</a>
+</body>
+</html>

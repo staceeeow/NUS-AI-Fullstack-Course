@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Capstone: AI-Powered LMS</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --panel:#ffffff; --border:#dfe3e8; --text:#1c2530; --muted:#5b6572;
+    --heading:#0b5a9e; --accent:#e8720c; --code-bg:#f3f2ee; --code-text:#b3423b;
+    --pill-bg:#f0eee9; --tab-active:#0b5a9e; --tab-inactive:#f0f2f4;
+    --rubric-head:#f5f6f7; --proficient:#eef7ee; --developing:#fff8ec; --below:#fbeeee;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14181d; --panel:#1b2127; --border:#2c343d; --text:#e6e9ec; --muted:#9aa5b1;
+      --heading:#6cb2f0; --accent:#f0924a; --code-bg:#0f1317; --code-text:#e0918c;
+      --pill-bg:#232a31; --tab-active:#6cb2f0; --tab-inactive:#232a31;
+      --rubric-head:#20262c; --proficient:#16241a; --developing:#2a2416; --below:#2a1a1a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14181d; --panel:#1b2127; --border:#2c343d; --text:#e6e9ec; --muted:#9aa5b1;
+    --heading:#6cb2f0; --accent:#f0924a; --code-bg:#0f1317; --code-text:#e0918c;
+    --pill-bg:#232a31; --tab-active:#6cb2f0; --tab-inactive:#232a31;
+    --rubric-head:#20262c; --proficient:#16241a; --developing:#2a2416; --below:#2a1a1a;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding-block:32px; line-height:1.55;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding-inline:20px;}
+  h1{font-size:1.7rem; margin:0 0 6px;}
+  h2{color:var(--heading); font-size:1.15rem; margin:32px 0 10px;}
+  h3{font-size:1.02rem; margin:18px 0 6px;}
+  .sub{color:var(--muted); font-size:0.95rem; margin-bottom:22px;}
+  .meta{
+    display:flex; flex-wrap:wrap; gap:22px; background:var(--panel); border:1px solid var(--border);
+    border-radius:10px; padding:16px 20px; margin-bottom:26px; font-size:0.9rem;
+  }
+  .meta div span{display:block; color:var(--muted); font-size:0.78rem; text-transform:uppercase; letter-spacing:.03em;}
+  .meta div strong{font-size:0.95rem;}
+  p{margin:0 0 12px;}
+  ul{margin:0 0 12px; padding-left:22px;}
+  li{margin-bottom:5px;}
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:20px 22px; margin-bottom:18px;}
+  .required{color:var(--heading); font-style:italic; font-size:0.9rem; margin-top:16px;}
+  code, .pill{
+    background:var(--pill-bg); color:var(--code-text); border-radius:5px; padding:1px 6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:0.85em;
+  }
+  pre{
+    background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:14px 16px;
+    overflow-x:auto; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:0.83rem;
+  }
+  pre code{background:none; padding:0; color:var(--text);}
+  .note{background:var(--developing); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:0.85rem; color:var(--muted); margin:10px 0;}
+  .hints{background:var(--pill-bg); border-radius:8px; padding:12px 16px; margin:10px 0;}
+  .hints p{margin-bottom:6px; font-weight:600;}
+
+  /* Tabs */
+  .tabs{margin-top:36px;}
+  .tabbar{display:flex; flex-wrap:wrap; gap:6px; border-bottom:1px solid var(--border); margin-bottom:0;}
+  .tabbtn{
+    background:var(--tab-inactive); border:1px solid var(--border); border-bottom:none;
+    border-radius:8px 8px 0 0; padding:10px 16px; font-size:0.88rem; cursor:pointer;
+    color:var(--text); font-family:inherit;
+  }
+  .tabbtn[aria-selected="true"]{background:var(--panel); color:var(--tab-active); font-weight:700; position:relative; top:1px;}
+  .tabpanels{background:var(--panel); border:1px solid var(--border); border-radius:0 10px 10px 10px; padding:24px; margin-top:-1px;}
+  .tabpanel{display:none;}
+  .tabpanel.active{display:block;}
+
+  /* Accordion (sub-topics within a section) */
+  .accordion-item{border:1px solid var(--border); border-radius:8px; margin-bottom:8px; overflow:hidden;}
+  .accordion-btn{
+    width:100%; text-align:left; background:var(--pill-bg); border:none; padding:12px 16px;
+    font-size:0.92rem; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:8px;
+    color:var(--text); font-family:inherit;
+  }
+  .accordion-btn .chev{transition:transform .15s ease; font-size:0.75em;}
+  .accordion-btn[aria-expanded="true"] .chev{transform:rotate(90deg);}
+  .accordion-body{display:none; padding:14px 16px; border-top:1px solid var(--border);}
+  .accordion-body.open{display:block;}
+
+  ol{margin:0 0 12px; padding-left:22px;}
+
+  /* Rubric */
+  table{width:100%; border-collapse:collapse; margin-top:8px; font-size:0.85rem;}
+  caption{text-align:left; font-weight:700; padding:10px 0; color:var(--heading); font-size:1.05rem;}
+  th,td{border:1px solid var(--border); padding:10px 12px; vertical-align:top; text-align:left;}
+  thead th{background:var(--rubric-head);}
+  td.crit{font-weight:600; width:20%;}
+  td.pts{width:60px; text-align:center; font-weight:700; white-space:nowrap;}
+  .rating-head{font-weight:700; display:block; margin-bottom:3px;}
+  td.proficient{background:var(--proficient);}
+  td.developing{background:var(--developing);}
+  td.below{background:var(--below);}
+  tfoot td{font-weight:700; text-align:right; background:var(--rubric-head);}
+  .tablewrap{overflow-x:auto;}
+
+  @media (max-width:640px){
+    .meta{gap:14px;}
+    .tabbtn{padding:8px 10px; font-size:0.8rem;}
+    .tabpanels{padding:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Capstone Details</h1>
+  <div class="sub">AI-Powered Learning Management System (LMS) — Capstone Project</div>
+
+  <div class="meta">
+    <div><span>Due</span><strong>Oct 6 by 4:29pm</strong></div>
+    <div><span>Points</span><strong>70</strong></div>
+    <div><span>Submitting</span><strong>a file upload</strong></div>
+    <div><span>File Types</span><strong>zip, pdf, and html</strong></div>
+    <div><span>Attempts</span><strong>0</strong></div>
+    <div><span>Allowed Attempts</span><strong>1</strong></div>
+    <div><span>Available</span><strong>after Sep 22 at 2:30am</strong></div>
+  </div>
+
+  <h2>Introduction</h2>
+  <div class="card">
+    <p>As you near the completion of the programme, dive into an engaging capstone project on an AI-Powered Learning Management System (LMS). The project is divided into four main sections that test your knowledge, from frontend to backend to understanding AI features.</p>
+    <p>Please note this capstone does not aim to deliver a fully integrated, production-ready website or unified UI and aims to test your understanding of the topics covered in the programme. While real-world applications require adherence to security best practices, this capstone is a prototype. Therefore, comprehensive security and compliance measures are not enforced or assessed as part of the submission.</p>
+  </div>
+
+  <h2>Learning Outcomes</h2>
+  <div class="card">
+    <ul>
+      <li>Build responsive UIs using HTML, CSS, and Bootstrap.</li>
+      <li>Add interactivity with JavaScript and manage UI state with React.</li>
+      <li>Develop RESTful APIs using Express.js.</li>
+      <li>Data validation, and API integration with the frontend.</li>
+      <li>Design, manage, and query relational and non-relational databases by building full-stack applications using MySQL and MongoDB.</li>
+      <li>Understand the concept and architecture of Smart Search in a full-stack AI-powered LMS.</li>
+    </ul>
+  </div>
+
+  <h2>Section wise Submission Instructions</h2>
+  <div class="card">
+    <h3>Section 1 submission instructions</h3>
+    <p><strong>i) HTML, CSS, Bootstrap</strong></p>
+    <ul><li>Upload <code>index.html</code>, rename file as <code>Capstone_Section1_HTML_[Your Last Name].html</code></li></ul>
+    <p><strong>ii) JavaScript</strong></p>
+    <ul><li>Upload <code>Javascript.html</code>, rename file as <code>Capstone_Section1_JS_[Your Last Name].html</code></li></ul>
+    <p><strong>iii) React</strong></p>
+    <ul>
+      <li>Remove the <code>node_modules</code> folder</li>
+      <li>Zip up entire react project folder</li>
+      <li>Upload the zip file as <code>Capstone_Section1_React_[Your Last Name]</code></li>
+    </ul>
+
+    <h3>Section 2 submission instructions</h3>
+    <ul>
+      <li>Remove the <code>node_modules</code> folder</li>
+      <li>Zip up the entire express project folder</li>
+      <li>Upload the zip file as <code>Capstone_Section2_[Your last name]</code></li>
+    </ul>
+
+    <h3>Section 3 submission instructions</h3>
+    <ul>
+      <li>Remove the <code>node_modules</code> folder</li>
+      <li>Zip up the entire express project folder</li>
+      <li>Upload the zip file as <code>Capstone_Section3_[Your last name]</code></li>
+      <li>Submit a PDF file containing screenshots and commands for MongoDB. Name the PDF file as <code>Capstone_Section3_MongoDB_[Your last name]</code></li>
+      <li>Submit a PDF file containing all MySQL queries. Name the PDF file as <code>Capstone_Section3_SQL_[Your last name]</code></li>
+    </ul>
+
+    <h3>Section 4 submission instructions</h3>
+    <ul><li>Upload the PDF file as <code>Capstone_Section4_[Your last name]</code></li></ul>
+  </div>
+
+  <h2>Submission Instructions</h2>
+  <div class="card">
+    <ul>
+      <li>Click on the <strong>Start Assignment</strong> button at the top of this page to make your submission.</li>
+      <li>Upload all the files. (Use the checklist to ensure you have uploaded all files for each section.)</li>
+      <li>Click on <strong>Submit Assignment</strong>.</li>
+    </ul>
+    <p><strong>Your submission will be considered complete when it meets these criteria:</strong></p>
+    <ul>
+      <li>Includes all the critical elements outlined in the instructions.</li>
+      <li>It will be graded as per the rubric available on this page.</li>
+      <li>Adheres to the submission guidelines.</li>
+      <li>Is submitted on time.</li>
+    </ul>
+    <p class="required">This is a required activity and counts towards programme completion.</p>
+  </div>
+
+  <!-- ===================== TABS ===================== -->
+  <div class="tabs">
+    <h2 style="margin-top:0">Capstone Details</h2>
+    <div class="tabbar" role="tablist">
+      <button class="tabbtn" role="tab" aria-selected="true" data-tab="sysreq">System Requirements and Set up</button>
+      <button class="tabbtn" role="tab" aria-selected="false" data-tab="sec1">Section 1: Frontend Development</button>
+      <button class="tabbtn" role="tab" aria-selected="false" data-tab="sec2">Section 2: Backend Development</button>
+      <button class="tabbtn" role="tab" aria-selected="false" data-tab="sec3">Section 3: Database</button>
+      <button class="tabbtn" role="tab" aria-selected="false" data-tab="sec4">Section 4: AI Features</button>
+    </div>
+
+    <div class="tabpanels">
+
+      <!-- System Requirements -->
+      <div class="tabpanel active" data-panel="sysreq">
+        <h3>System Requirements and Set up</h3>
+        <p>Before beginning the Capstone Project, it is essential to have all the required tools installed and configured on your system.</p>
+        <p>To ensure a smooth experience, please refer to the Installation Guide. It includes step-by-step instructions for installing the following:</p>
+        <ul>
+          <li><strong>Visual Studio Code</strong> — for editing and managing your code</li>
+          <li><strong>Node.js and npm</strong> — required for both frontend (React) and backend (Express)</li>
+          <li><strong>MySQL &amp; MySQL Workbench</strong> — for working with relational databases</li>
+          <li><strong>MongoDB Shell</strong> — for NoSQL data handling and AI integration</li>
+          <li><strong>Command Prompt/Terminal setup</strong> — for executing scripts and running local servers</li>
+        </ul>
+        <p><em>Select each tab to learn more.</em></p>
+      </div>
+
+      <!-- Section 1 -->
+      <div class="tabpanel" data-panel="sec1">
+        <h3>Section 1: Frontend Development</h3>
+        <p>Students build the look and feel of the LMS using HTML, CSS, Bootstrap, JavaScript, and React.js. This includes pages like login, course list, enrollment, and performance tracking. At first, these pages don't connect to real data, but they are set up to work with the backend later.</p>
+
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> HTML, CSS, BOOTSTRAP</button>
+          <div class="accordion-body">
+            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> JAVASCRIPT</button>
+          <div class="accordion-body">
+            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> REACT.JS</button>
+          <div class="accordion-body">
+            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+          </div>
+        </div>
+        <p><em>Select each tab to learn more.</em></p>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="tabpanel" data-panel="sec2">
+        <h3>Section 2: Backend Development</h3>
+        <p>Next, the backend is added using <code>Express.js</code> and <code>Node.js</code>. Students create REST APIs to manage data, logins, and app rules. The frontend from Section 1 uses these APIs to register users, log in, show courses, and track progress. This makes the website active and responsive to users. The backend also keeps the data safe and connects the user interface to the database.</p>
+
+        <h3>Express.js (Node.js)</h3>
+        <p><code>Express.js</code> is a simple and fast tool that helps you build backend APIs using Node.js. Node.js lets you run JavaScript on the server (not just in the browser) and can handle things like web requests, files, and networks. But using only Node.js can be tricky and time-consuming. Express makes it easier by giving a clear and easy way to build web servers and APIs. It works on top of Node.js and helps you build backend features quickly and in an organised way.</p>
+
+        <p><strong>1. Manage Courses and Learners</strong></p>
+        <ul>
+          <li><code>GET /courses</code> → Fetch all available courses</li>
+          <li><code>POST /enroll</code> → Enroll a user in a course</li>
+          <li><code>GET /user/:id/courses</code> → View user progress</li>
+        </ul>
+        <p><strong>2. Serve AI-Based Recommendations</strong></p>
+        <ul>
+          <li>Endpoint like <code>GET /recommend?interest=ai</code> → return smart suggestions</li>
+          <li>In future, integrate Python ML model using <code>child_process</code> or via <code>Flask</code> microservice</li>
+        </ul>
+        <p><strong>3. Track Performance</strong></p>
+        <ul>
+          <li>Store progress like quiz scores, time spent, completed modules, etc.</li>
+          <li>Route example: <code>POST /track-progress</code></li>
+        </ul>
+
+        <h3>Instructions</h3>
+        <p><strong>Step 1: Setup Backend with Express.js</strong></p>
+        <ol>
+          <li>Open a new terminal window (or tab)</li>
+          <li>Navigate to your projects folder (parallel to your React.js app)
+            <pre><code>cd path/to/your/projects/folder</code></pre>
+          </li>
+          <li>Create a backend folder:
+            <pre><code>mkdir lms-backend
+cd lms-backend</code></pre>
+          </li>
+          <li>Initialise a Node.js project (creates <code>package.json</code>)
+            <pre><code>npm init -y</code></pre>
+          </li>
+          <li>Install Express.js
+            <pre><code>npm install express</code></pre>
+          </li>
+          <li>Install <code>nodemon</code> for auto-reloading backend on code change (optional)
+            <pre><code>npm install --save-dev nodemon</code></pre>
+          </li>
+          <li>Create <code>server.js</code> file inside <code>lms-backend</code> folder with basic Express Server</li>
+          <li>Run backend server:
+            <pre><code>npm run dev</code></pre>
+            or
+            <pre><code>node server.js</code></pre>
+          </li>
+        </ol>
+
+        <p><strong>Sample Code:</strong> <em>(as shown on the assignment page — the visible portion is shown below; the source code block continues past the point captured in the screenshot)</em></p>
+        <pre><code>// Import the express module
+const express = require('express');
+
+// Create an Express application
+const app = express();
+
+// Define the port number to run the server on
+const PORT = 5000;
+
+// 1. Middleware to parse JSON bodies in requests
+// ...(code block continues below this point in the source page)</code></pre>
+
+        <h3 style="color:var(--accent)">Now, perform the below tasks:</h3>
+
+        <p><strong>1. Add a <code>POST</code> route <code>/enroll</code> to enroll a user in a course</strong></p>
+        <p>Create a new <code>POST</code> endpoint <code>/enroll</code> that accepts a JSON body with <code>userId</code> and <code>courseId</code>. It should respond with a confirmation message like:</p>
+        <pre><code>User 123 successfully enrolled in course 1.</code></pre>
+        <div class="hints">
+          <p>Hints:</p>
+          <ul>
+            <li>Use <code>app.post('/enroll', (req, res) => { ... })</code></li>
+            <li>Access data via <code>req.body.userId</code> and <code>req.body.courseId</code></li>
+            <li>Use <code>res.json()</code> to send a JSON response</li>
+            <li>Don't forget to use <code>express.json()</code> middleware (already included above)</li>
+            <li>The output should resemble the reference image linked on the assignment page.</li>
+          </ul>
+        </div>
+
+        <p><strong>2. Add error handling for missing fields in the <code>/enroll</code> <code>POST</code> request</strong></p>
+        <p>Improve the <code>/enroll</code> route so that if <code>userId</code> or <code>courseId</code> is missing from the request body, it responds with status code <code>400</code> and message:</p>
+        <pre><code>Missing userId or courseId in request.</code></pre>
+        <div class="hints">
+          <p>Hints:</p>
+          <ul>
+            <li>Check if <code>req.body.userId</code> and <code>req.body.courseId</code> exist</li>
+            <li>Use <code>res.status(400).json({ error: '...' })</code> to send error response</li>
+            <li>Otherwise, proceed with the enrollment confirmation</li>
+            <li>The output should resemble the reference image linked on the assignment page.</li>
+          </ul>
+        </div>
+        <p><em>Select each tab to learn more.</em></p>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="tabpanel" data-panel="sec3">
+        <h3>Section 3: Database</h3>
+        <p>This section aims to equip students with practical skills in working with two popular databases: MySQL and MongoDB. Using MySQL through the Command Prompt, students will learn to create databases, design relational tables, insert sample data, and perform CRUD operations in a Learning Management System (LMS) context. With MongoDB, students will use MongoDB Compass and Express.js to design schemas, insert and retrieve data, and build RESTful APIs for a school management system. This hands-on approach builds foundational knowledge in both SQL-based and NoSQL database systems.</p>
+
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> MySQL</button>
+          <div class="accordion-body">
+            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> Mongo DB</button>
+          <div class="accordion-body">
+            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+          </div>
+        </div>
+        <p><em>Select each tab to learn more.</em></p>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="tabpanel" data-panel="sec4">
+        <h3>Section 4: AI Features</h3>
+        <p><strong>Objective:</strong></p>
+        <p>In this section, learners will explore the concept of Smart Search and understand how it functions within a full-stack AI-powered Learning Management System (LMS). The objective of this task is to give learners an overview of how the Smart Search AI feature works on a webpage — from user interaction to backend processing — without diving into the actual code implementation. Learners will gain a conceptual understanding of the components involved and how they connect to create a responsive, intelligent search experience in an LMS.</p>
+
+        <h3>Smart Search</h3>
+        <p>Is an intelligent feature that goes beyond basic keyword matching to help users find relevant content more efficiently. Unlike traditional search bars that require exact matches, Smart Search can interpret variations of a user's query using keyword recognition, partial matches, and even synonyms. For example, if a user types "learn web design", the system can intelligently suggest HTML, CSS, or layout-related courses, even if those exact words weren't used in the course titles.</p>
+        <p>In the context of a full-stack LMS project, Smart Search plays a critical role in enhancing user experience by quickly guiding learners to the resources they need. On the frontend, technologies like JavaScript or React capture the user's input in real-time. This input is then sent via an API to the backend, where a server (built using Node.js with Express or Python with Flask) processes the query. The backend performs keyword-based matching against stored data in a database (such as MySQL or MongoDB) and returns the most relevant results. These results are then dynamically displayed on the webpage, allowing the user to see suggestions instantly. Optionally, simple NLP or ML logic can be introduced to enhance the matching process, such as recognising synonyms or correcting spelling errors. This setup ensures that the LMS is not only user-friendly but also responsive and intelligent.</p>
+
+        <p style="color:var(--accent); font-weight:700;">Now, answer the below reflection questions in 100 to 150 words:</p>
+        <ol>
+          <li>How does Smart Search enhance the learning experience in an LMS compared to a regular search bar?</li>
+          <li>Explain the role of frontend, backend, and database in making Smart Search work in a full-stack LMS project?</li>
+          <li>What challenges might developers face when implementing Smart Search, and how can these be addressed conceptually?</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== RUBRIC ===================== -->
+  <h2>Capstone: Rubric</h2>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th style="width:20%">Criteria</th><th>Proficient</th><th>Developing</th><th>Below Expectation</th><th style="width:60px">Pts</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="crit">Add 2 Flexbox Feature Boxes</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Both boxes present, correct titles &amp; structured</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>One box added or incorrect HTML structure</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Add 2 Bootstrap Cards</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Uses Bootstrap grid, each card includes title, text &amp; button</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Layout/semantics are incorrect or one card is missing</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">JS Email Validation</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Fully functional validation: checks "@", updates DOM, handles submit</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Logic errors, missing message update or submit handling</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">JS Input Event Handling</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Updates dynamically as user types using event listener</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Text updates incorrectly or on wrong event</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Password Strength Checker (React)</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Checks length &amp; number, shows message accordingly</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>No regex, improper condition, or no message display</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Course Description Toggle (React)</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Toggles description with button label updates</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Partially working or no conditional rendering</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">POST /enroll API</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Accepts JSON, returns correct response</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Response or request handling is incorrect</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Error Handling for Missing Fields</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Returns 400 error &amp; message when userId or courseId is missing</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Only partial check or incorrect status/message</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Create instructors Table &amp; Insert Records</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Correct SQL syntax: AUTO_INCREMENT, UNIQUE, 3 valid inserts</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Missing constraints or partial inserts</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Add User + Enroll + JOIN Query</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Executes all 3 SQL steps correctly, shows enrolled user</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Only some parts completed or join query incorrect</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Create a new entry in MongoDB database</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Data is inserted correctly using the appropriate commands</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Data added is incomplete</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Explain how Smart Search enhances user experience compared to a standard search bar</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Clear comparison with practical insights and examples related to learning experiences</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Basic explanation with limited comparison or unclear LMS context</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Describe how frontend, backend, and database components contribute to Smart Search</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Clear explanation of each layer's role and how they interact in a full-stack LMS</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Some roles unclear or missing, or lacks clarity on interactions</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+        <tr>
+          <td class="crit">Identify potential challenges and conceptually discuss solutions</td>
+          <td class="proficient"><span class="rating-head">5 to &gt;3.0 pts</span>Well-reasoned challenges with thoughtful suggestions or strategies</td>
+          <td class="developing"><span class="rating-head">3 to &gt;0.0 pts</span>Vague or generic mention of challenges; solutions not well developed</td>
+          <td class="below"><span class="rating-head">0 pts</span>Incorrect submission OR No Submission</td>
+          <td class="pts">5 pts</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="4">Total Points</td><td class="pts">70</td></tr>
+      </tfoot>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  // Tabs
+  const tabbtns = document.querySelectorAll('.tabbtn');
+  const panels = document.querySelectorAll('.tabpanel');
+  tabbtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabbtns.forEach(b => b.setAttribute('aria-selected', 'false'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.setAttribute('aria-selected', 'true');
+      document.querySelector('.tabpanel[data-panel="' + btn.dataset.tab + '"]').classList.add('active');
+    });
+  });
+
+  // Accordions
+  document.querySelectorAll('.accordion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      btn.nextElementSibling.classList.toggle('open', !open);
+    });
+  });
+</script>
+</body>
+</html>

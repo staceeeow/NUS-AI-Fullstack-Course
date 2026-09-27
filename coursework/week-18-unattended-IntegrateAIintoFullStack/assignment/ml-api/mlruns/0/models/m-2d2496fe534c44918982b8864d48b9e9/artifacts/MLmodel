@@ -1,0 +1,29 @@
+artifact_path: /home/staceeeow/aicourse/coursework/week-18-unattended-IntegrateAIintoFullStack/assignment/ml-api/mlruns/0/models/m-2d2496fe534c44918982b8864d48b9e9/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.14.6
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.1
+    skops_trusted_types: null
+is_signature_from_type_hint: false
+mlflow_version: 3.16.1
+model_id: m-2d2496fe534c44918982b8864d48b9e9
+model_size_bytes: 9255
+model_uuid: m-2d2496fe534c44918982b8864d48b9e9
+prompts: null
+run_id: f18b4bf49b784186b4d088b9e95fb0bc
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 4]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-09-27 03:28:12.071021'
