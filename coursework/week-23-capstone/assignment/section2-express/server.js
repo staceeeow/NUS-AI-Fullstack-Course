@@ -12,8 +12,9 @@ app.use(express.json());
 
 app.get('/courses', (req, res) => {
   res.json([
-    { id: 1, title: 'Full Stack Web Development' },
-    { id: 2, title: 'AI & Machine Learning' },
+    { id: 1, name: 'React for Beginners' },
+    { id: 2, name: 'Intro to Data Science' },
+    { id: 3, name: 'AI Fundamentals' },
   ]);
 });
 

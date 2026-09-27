@@ -1,15 +1,16 @@
 mysql> SELECT * FROM instructors;
-+----+----------------+--------------------+-------------------------+
-| id | name           | email              | department              |
-+----+----------------+--------------------+-------------------------+
-|  1 | Dr. Mei Lin    | mei.lin@lms.edu    | Computer Science        |
-|  2 | Dr. Arun Kumar | arun.kumar@lms.edu | Data Science            |
-|  3 | Dr. Wei Zhang  | wei.zhang@lms.edu  | Artificial Intelligence |
-+----+----------------+--------------------+-------------------------+
++---------------+----------------+--------------------+
+| instructor_id | name           | email              |
++---------------+----------------+--------------------+
+|             1 | Dr. Mei Lin    | mei.lin@lms.edu    |
+|             2 | Dr. Arun Kumar | arun.kumar@lms.edu |
+|             3 | Dr. Wei Zhang  | wei.zhang@lms.edu  |
++---------------+----------------+--------------------+
 
-mysql> SELECT users.name AS student_name, courses.title AS course_title, instructors.name AS instructor_name, enrollments.enrolled_at FROM enrollments JOIN users ON enrollments.user_id = users.id JOIN courses ON enrollments.course_id = courses.id JOIN instructors ON courses.instructor_id = instructors.id;
-+--------------+-----------------------+-----------------+---------------------+
-| student_name | course_title          | instructor_name | enrolled_at         |
-+--------------+-----------------------+-----------------+---------------------+
-| Cara Ong     | AI & Machine Learning | Dr. Wei Zhang   | 2026-09-27 11:41:33 |
-+--------------+-----------------------+-----------------+---------------------+
+mysql> SELECT u.name, u.email, e.enrollment_date FROM enrollments e JOIN users u ON e.user_id = u.user_id JOIN courses c ON e.course_id = c.course_id WHERE c.course_name = "CSS Design";
++-------------+-----------------+-----------------+
+| name        | email           | enrollment_date |
++-------------+-----------------+-----------------+
+| Bob Smith   | bob@example.com | 2024-02-15      |
+| Daniel Rose | daniel1@lms.com | 2026-09-27      |
++-------------+-----------------+-----------------+

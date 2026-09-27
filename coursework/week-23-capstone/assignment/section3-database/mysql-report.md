@@ -1,21 +1,34 @@
 # Capstone Section 3 - MySQL
 
-All commands below were run against a local MySQL 8.0.40 server (`mysql -u root < mysql-queries.sql`). Output is captured directly from the server, not simulated.
+All commands below were run against a local MySQL 8.0.40 server (`mysql -u root -p < mysql-queries.sql`). Output is captured directly from the server, not simulated. Full script: `mysql-queries.sql`.
 
-## Create instructors table & insert records
+## Setup: `lms_db` database
 
 ```sql
-CREATE TABLE IF NOT EXISTS instructors (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    department VARCHAR(100)
+CREATE DATABASE lms_db;
+USE lms_db;
+
+CREATE TABLE users ( user_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100) UNIQUE, password VARCHAR(255) );
+CREATE TABLE courses ( course_id INT AUTO_INCREMENT PRIMARY KEY, course_name VARCHAR(100), description TEXT );
+CREATE TABLE enrollments ( enrollment_id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, course_id INT, enrollment_date DATE, FOREIGN KEY (user_id) REFERENCES users(user_id), FOREIGN KEY (course_id) REFERENCES courses(course_id) );
+CREATE TABLE assessments ( assessment_id INT AUTO_INCREMENT PRIMARY KEY, course_id INT, title VARCHAR(100), max_score INT, FOREIGN KEY (course_id) REFERENCES courses(course_id) );
+```
+
+Seeded with the sample users, courses, enrollments and assessments from the assignment brief (Alice Johnson / Bob Smith / Charlie Lee; HTML Basics / CSS Design / MySQL for Beginners, etc).
+
+## Task 1: Create `instructors` table & insert records
+
+```sql
+CREATE TABLE instructors (
+  instructor_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE
 );
 
-INSERT INTO instructors (name, email, department) VALUES
-    ('Dr. Mei Lin',    'mei.lin@lms.edu',    'Computer Science'),
-    ('Dr. Arun Kumar', 'arun.kumar@lms.edu', 'Data Science'),
-    ('Dr. Wei Zhang',  'wei.zhang@lms.edu',  'Artificial Intelligence');
+INSERT INTO instructors (name, email) VALUES
+  ('Dr. Mei Lin', 'mei.lin@lms.edu'),
+  ('Dr. Arun Kumar', 'arun.kumar@lms.edu'),
+  ('Dr. Wei Zhang', 'wei.zhang@lms.edu');
 
 SELECT * FROM instructors;
 ```
@@ -23,48 +36,41 @@ SELECT * FROM instructors;
 Result:
 
 ```
-+----+----------------+--------------------+-------------------------+
-| id | name           | email              | department              |
-+----+----------------+--------------------+-------------------------+
-|  1 | Dr. Mei Lin    | mei.lin@lms.edu    | Computer Science        |
-|  2 | Dr. Arun Kumar | arun.kumar@lms.edu | Data Science            |
-|  3 | Dr. Wei Zhang  | wei.zhang@lms.edu  | Artificial Intelligence |
-+----+----------------+--------------------+-------------------------+
++---------------+----------------+--------------------+
+| instructor_id | name           | email              |
++---------------+----------------+--------------------+
+|             1 | Dr. Mei Lin    | mei.lin@lms.edu    |
+|             2 | Dr. Arun Kumar | arun.kumar@lms.edu |
+|             3 | Dr. Wei Zhang  | wei.zhang@lms.edu  |
++---------------+----------------+--------------------+
 ```
 
-## Add User + Enroll + JOIN Query
+## Task 2: Enroll Daniel Rose in "CSS Design"
 
 ```sql
--- 1. Add a new user
-INSERT INTO users (name, email) VALUES ('Cara Ong', 'cara.ong@example.com');
+INSERT INTO users (name, email, password) VALUES ('Daniel Rose', 'daniel1@lms.com', 'daniel123');
 
--- 2. Enroll that user in a course
-INSERT INTO enrollments (user_id, course_id)
+INSERT INTO enrollments (user_id, course_id, enrollment_date)
 VALUES (
-    (SELECT id FROM users WHERE email = 'cara.ong@example.com'),
-    (SELECT id FROM courses WHERE title = 'AI & Machine Learning')
+  (SELECT user_id FROM users WHERE email = 'daniel1@lms.com'),
+  (SELECT course_id FROM courses WHERE course_name = 'CSS Design'),
+  CURDATE()
 );
 
--- 3. JOIN query showing the enrolled user with their course and instructor
-SELECT
-    users.name          AS student_name,
-    courses.title        AS course_title,
-    instructors.name     AS instructor_name,
-    enrollments.enrolled_at
-FROM enrollments
-JOIN users       ON enrollments.user_id = users.id
-JOIN courses      ON enrollments.course_id = courses.id
-JOIN instructors  ON courses.instructor_id = instructors.id;
+SELECT u.name, u.email, e.enrollment_date
+FROM enrollments e
+JOIN users u ON e.user_id = u.user_id
+JOIN courses c ON e.course_id = c.course_id
+WHERE c.course_name = 'CSS Design';
 ```
 
-Result:
+Result (Bob Smith was already enrolled in CSS Design from the sample data; Daniel Rose is the newly added enrollment, dated today):
 
 ```
-+--------------+-----------------------+-----------------+---------------------+
-| student_name | course_title          | instructor_name | enrolled_at         |
-+--------------+-----------------------+-----------------+---------------------+
-| Cara Ong     | AI & Machine Learning | Dr. Wei Zhang   | 2026-09-27 11:41:33 |
-+--------------+-----------------------+-----------------+---------------------+
++-------------+-----------------+-----------------+
+| name        | email           | enrollment_date |
++-------------+-----------------+-----------------+
+| Bob Smith   | bob@example.com | 2024-02-15      |
+| Daniel Rose | daniel1@lms.com | 2026-09-27      |
++-------------+-----------------+-----------------+
 ```
-
-The `instructors`, `users`, `courses` and `enrollments` schema (with `AUTO_INCREMENT` primary keys, a `UNIQUE` constraint on `instructors.email`, and foreign keys linking enrollments back to users/courses) is in `mysql-queries.sql`.

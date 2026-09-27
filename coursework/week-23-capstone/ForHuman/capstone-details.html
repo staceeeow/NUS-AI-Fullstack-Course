@@ -228,19 +228,369 @@
         <div class="accordion-item">
           <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> HTML, CSS, BOOTSTRAP</button>
           <div class="accordion-body">
-            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+            <p><strong>Objective:</strong></p>
+            <p>This code helps you learn how to create flexible layouts using Flexbox and Bootstrap. It includes a menu bar and a section built with Flexbox. You'll also add more Flexbox and Bootstrap cards. This helps you understand modern CSS layouts and how to build user interfaces using components.</p>
+
+            <p><strong>Instructions &ndash; HTML, CSS, Bootstrap</strong></p>
+            <p><strong>Step 1: Create a Project Folder in VS Code</strong></p>
+            <ul>
+              <li>Open Visual Studio Code.</li>
+              <li>Go to <strong>File &gt; Open Folder</strong> and create or choose a folder (e.g., <code>ai-lms-ui-module3</code>).</li>
+              <li>In that folder, make a new file and name it <code>index.html</code>.</li>
+            </ul>
+
+            <p><strong>Step 2: Add Starter Code</strong></p>
+            <ul>
+              <li>Paste the given HTML code into <code>index.html</code>. To get this output, see <a href="Section1_HTML_Step2.png">Section1_HTML_Step2.png</a>.</li>
+              <li>Save the file (Ctrl + S or Cmd + S on Mac).</li>
+            </ul>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;
+  &lt;title&gt;AI LMS | Module 3-4&lt;/title&gt;
+  &lt;!-- Bootstrap CDN --&gt;
+  &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/&gt;
+  &lt;style&gt;
+    /* Example Flexbox Layout */
+    .feature-box {
+      display: flex;
+      justify-content: space-between;
+      /* ...continues: the reference output above is the page this starter code renders
+         &mdash; a blue "AI-LMS" nav bar (Dashboard | Courses | Profile), a "Welcome to
+         Your Learning Dashboard" heading, and one Flexbox feature box titled
+         "Adaptive Courses". */
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+
+            <p><strong>Know What the Code Uses</strong></p>
+            <p>The code includes:</p>
+            <ul>
+              <li><strong>Semantic HTML</strong> tags like <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;nav&gt;</code></li>
+              <li><strong>Internal CSS</strong> with Flexbox for layout</li>
+              <li><strong>Bootstrap 5</strong> for responsive design and ready-made parts</li>
+            </ul>
+
+            <p><strong>Step 3: Run the Page</strong></p>
+
+            <h3 style="color:var(--accent)">Now, perform the below tasks:</h3>
+
+            <p><strong>1. Add two more feature boxes using Flexbox.</strong></p>
+            <p>In the section where the "Adaptive Courses" card is, add two more cards:</p>
+            <ul>
+              <li>One titled <strong>"Progress Tracking"</strong></li>
+              <li>One titled <strong>"Real-time Assessments"</strong></li>
+            </ul>
+
+            <p><strong>2. Add a new section below the feature boxes with two Bootstrap cards placed side by side:</strong></p>
+            <ul>
+              <li>One card should say <strong>"HTML Module"</strong></li>
+              <li>The other should say <strong>"CSS Module"</strong></li>
+            </ul>
+
+            <div class="hints">
+              <p>Hints:</p>
+              <ul>
+                <li>Start with a container structure using Bootstrap Grid:
+                  <pre><code>&lt;div class="row"&gt;
+  &lt;div class="col-md-6"&gt; &lt;!-- Card 1 --&gt; &lt;/div&gt;
+  &lt;div class="col-md-6"&gt; &lt;!-- Card 2 --&gt; &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </li>
+                <li>Inside each column, add a Bootstrap card using <code>class="card"</code>.
+                  <ul>
+                    <li>Inside that, add: <code>card-body</code>, <code>card-title</code>, <code>card-text</code>, and a <code>btn btn-primary</code></li>
+                  </ul>
+                </li>
+                <li>Wrap this layout inside a <code>&lt;section&gt;</code> tag to keep your structure semantic.</li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="accordion-item">
           <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> JAVASCRIPT</button>
           <div class="accordion-body">
-            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+            <p><strong>Objective:</strong></p>
+            <p>This code helps you learn basic JavaScript skills like making buttons work, changing page content, checking form inputs, and handling user actions. You'll practise writing functions and making the page respond to what users do &mdash; important steps in building interactive websites.</p>
+
+            <p><strong>Instructions &ndash; JavaScript</strong></p>
+            <p><strong>Step 1: Set Up Project Folder in Visual Studio Code</strong></p>
+            <ul>
+              <li>Open Visual Studio Code.</li>
+              <li>Click on <strong>File &gt; Open Folder</strong>, then select or create a folder (e.g., <code>ai-lms-js-module5</code>).</li>
+              <li>Inside this folder:
+                <ul><li>Click New File and name it <code>Javascript.html</code></li></ul>
+              </li>
+            </ul>
+
+            <p><strong>Step 2: Add Starter Code</strong></p>
+            <ul>
+              <li>Copy and paste the provided HTML and CSS, JS code into <code>Javascript.html</code>. To get this output, see <a href="Section1_JAVASCRIPT_Step2.pdf">Section1_JAVASCRIPT_Step2.pdf</a>.</li>
+              <li>Save the file (Ctrl + S or CMD + S on Mac).</li>
+            </ul>
+            <p>The reference output is a page titled "AI-Powered LMS: JavaScript Practice" with four sections already wired up as starter behaviour: <strong>1. Enroll in Course</strong> (a button that alerts "You have been enrolled in the 'JavaScript Essentials' course!"), <strong>2. AI Suggestion Box</strong> (a button that shows "We recommend: 'Responsive Web Design' next!"), <strong>3. Validate Learner Email</strong>, and <strong>4. Type Your Learning Goal</strong> &mdash; the last two are the parts you complete below.</p>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;AI LMS - Module 5: JavaScript Interactivity&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      background-color: #f5f7fa;
+    }
+    .section {
+      background: white;
+      /* ...continues: sections for "Enroll in Course", "AI Suggestion Box",
+         "Validate Learner Email" (id="email", id="emailMessage") and
+         "Type Your Learning Goal" (id="goalInput", id="goalOutput"). */
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+
+            <p><strong>Understand the Code Components</strong></p>
+            <p>The project covers:</p>
+            <ul>
+              <li>Basic JavaScript interactivity (button alerts)</li>
+              <li>DOM manipulation (changing text and styles dynamically)</li>
+              <li>Form validation logic with JavaScript</li>
+              <li>Event handling for user input (keypress/input events)</li>
+              <li>Internal CSS styles for layout and presentation are included within the <code>&lt;style&gt;</code> tag.</li>
+            </ul>
+
+            <p><strong>Step 4: Run the Code</strong></p>
+            <ul>
+              <li>Right-click on <code>Javascript.html</code> and select "Open with Live Server"</li>
+              <li>OR just double-click the file to open it in your browser.</li>
+            </ul>
+
+            <h3 style="color:var(--accent)">Now, perform the below tasks:</h3>
+
+            <p><strong>1. Complete the Email Validation Function</strong></p>
+            <p>In the section titled "Validate Learner Email", complete the JavaScript function <code>validateEmail()</code> so it checks whether the user's input includes an <code>@</code> symbol.</p>
+            <ul>
+              <li>If the email is invalid (does not include <code>@</code>), display: <code>Invalid email address</code></li>
+              <li>If the email is valid, display: <code>Email accepted!</code></li>
+            </ul>
+            <div class="hints">
+              <p>Hints:</p>
+              <ul>
+                <li>Use <code>document.getElementById("email").value</code> to get the input.</li>
+                <li>Use <code>includes("@")</code> to check if the <code>@</code> symbol is present.</li>
+                <li>Update the message using <code>document.getElementById("emailMessage").textContent = "..."</code>.</li>
+                <li>Use <code>return false</code> to stop the form from submitting if the input is invalid.</li>
+              </ul>
+            </div>
+
+            <p><strong>2. Add Keypress (Input) Event for Goal Typing</strong></p>
+            <p>In the section "Type Your Learning Goal", you need to make the text below the input box dynamically update as the learner types their goal.</p>
+            <ul>
+              <li>As the learner types in the input box, update the <code>&lt;p&gt;</code> below with the full input value.</li>
+            </ul>
+            <div class="hints">
+              <p>Hints:</p>
+              <ul>
+                <li>Select the input element using: <code>let goalInput = document.getElementById("goalInput");</code></li>
+                <li>Use the <code>addEventListener('input', function() {...})</code> method.</li>
+                <li>Get the typed text using <code>goalInput.value</code>.</li>
+                <li>Update the output text using: <code>document.getElementById("goalOutput").textContent = "Your goal: " + ...</code></li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="accordion-item">
           <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> REACT.JS</button>
           <div class="accordion-body">
-            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+            <p><strong>Objective:</strong></p>
+            <p>This code helps you learn key React.js skills like using components, writing JSX, managing data with <code>useState</code>, passing data with props, and moving between pages. You'll practise building parts of the page that can be reused, handling changes from users, and creating single-page apps that are fast and easy to use.</p>
+
+            <p><strong>Instructions:</strong></p>
+            <p><strong>Step 1: Set Up the Project Folder in VS Code</strong></p>
+            <ol>
+              <li>Open Visual Studio Code</li>
+              <li>Open terminal in VS Code (Ctrl + ~)</li>
+              <li>Create the main project folder:
+                <ul>
+                  <li><code>mkdir ai-lms</code></li>
+                  <li><code>cd ai-lms</code></li>
+                </ul>
+              </li>
+            </ol>
+
+            <p><strong>Step 2: Set Up the Frontend (React.js)</strong></p>
+            <ol>
+              <li>Create the React app inside the main folder: <code>npx create-react-app client</code></li>
+              <li>Navigate to the React folder: <code>cd client</code></li>
+              <li>Start the React development server: <code>npm start</code></li>
+              <li>This will open the default React page at <code>http://localhost:3000</code></li>
+            </ol>
+
+            <p><strong>Step 3: Add Starter Code</strong></p>
+            <ul>
+              <li>Copy the code below to get this output, see <a href="Section1_REACT_Step3.pdf">Section1_REACT_Step3.pdf</a>.</li>
+              <li>Replace the contents of <code>client/src/</code> with:</li>
+            </ul>
+
+            <p><strong>App.js</strong></p>
+            <pre><code>import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Courses from './pages/Courses';
+import Chatbot from './pages/Chatbot';
+
+function App() {
+  return (
+    &lt;Router&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/" element={} /&gt;
+        &lt;Route path="/login" element={} /&gt;
+        &lt;Route path="/courses" element={} /&gt;
+        &lt;Route path="/chatbot" element={} /&gt;
+      &lt;/Routes&gt;
+    &lt;/Router&gt;
+  );
+}
+export default App;</code></pre>
+
+            <p><strong>index.js</strong></p>
+            <pre><code>import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render();</code></pre>
+
+            <p><strong>Step 4: Understand code components</strong></p>
+            <table>
+              <thead><tr><th>File/Folder</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td><code>App.js</code></td><td>Defines routes for the LMS (home, login, courses, chatbot)</td></tr>
+                <tr><td><code>pages/</code></td><td>Contains different pages</td></tr>
+                <tr><td><code>components/</code></td><td>Future reusable UI components (e.g., NavBar, CourseCard)</td></tr>
+                <tr><td><code>assets/</code></td><td>Images, icons</td></tr>
+                <tr><td><code>public/</code></td><td>Static HTML assets</td></tr>
+                <tr><td><code>index.js</code></td><td>Entry point to load the React app</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>Sample Code</strong></p>
+            <p><strong>Login.js and CourseRecommender.js</strong></p>
+            <p><em>Teaches: Components, useState, event handling, form validation, conditional rendering, user interaction</em></p>
+            <pre><code>import React, { useState } from 'react';
+
+// Login Component
+function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (email === '' || password === '') {
+      setMessage('Please fill in all fields.');
+    } else if (!email.includes('@')) {
+      setMessage('Invalid email format.');
+    } else {
+      setMessage('Login successful!');
+      // You can add API call or redirection here
+    }
+  };
+
+  return (
+    &lt;div style={{ padding: '20px' }}&gt;
+      &lt;h2&gt;Login to LMS&lt;/h2&gt;
+      &lt;form onSubmit={handleLogin}&gt;
+        &lt;input type="text" placeholder="Email" value={email} onChange={(e) =&gt; setEmail(e.target.value)} style={{ marginBottom: '10px', display: 'block' }} /&gt;
+        &lt;input type="password" placeholder="Password" value={password} onChange={(e) =&gt; setPassword(e.target.value)} style={{ marginBottom: '10px', display: 'block' }} /&gt;
+        &lt;button type="submit"&gt;Login&lt;/button&gt;
+      &lt;/form&gt;
+      {message &amp;&amp; &lt;p&gt;{message}&lt;/p&gt;}
+    &lt;/div&gt;
+  );
+}
+
+// Course Recommender Component
+function CourseRecommender() {
+  const [interest, setInterest] = useState('');
+  const [recommended, setRecommended] = useState('');
+
+  const recommendCourse = () => {
+    if (interest.toLowerCase().includes('web')) {
+      setRecommended('We recommend: React.js for Beginners');
+    } else if (interest.toLowerCase().includes('data')) {
+      setRecommended('We recommend: Intro to Data Science with Python');
+    } else if (interest.toLowerCase().includes('ai')) {
+      setRecommended('We recommend: Machine Learning with Scikit-Learn');
+    } else {
+      setRecommended('Please enter a valid interest (e.g., AI, Web, Data)');
+    }
+  };
+
+  return (
+    &lt;div style={{ padding: '20px' }}&gt;
+      &lt;h2&gt;AI Course Recommender&lt;/h2&gt;
+      &lt;input type="text" placeholder="Enter your interest (e.g., AI, Web, Data)" value={interest} onChange={(e) =&gt; setInterest(e.target.value)} style={{ marginBottom: '10px', display: 'block' }} /&gt;
+      &lt;button onClick={recommendCourse}&gt;Get Recommendation&lt;/button&gt;
+      {recommended &amp;&amp; &lt;p style={{ marginTop: '10px' }}&gt;{recommended}&lt;/p&gt;}
+    &lt;/div&gt;
+  );
+}
+
+// Export both components
+export { Login, CourseRecommender };</code></pre>
+
+            <p><strong>App.js</strong></p>
+            <pre><code>import React from 'react';
+import { Login, CourseRecommender } from './components/LMSComponents'; // adjust path if needed
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;Login /&gt;
+      &lt;hr /&gt;
+      &lt;CourseRecommender /&gt;
+    &lt;/div&gt;
+  );
+}
+export default App;</code></pre>
+
+            <h3 style="color:var(--accent)">Now, perform the below tasks:</h3>
+
+            <p><strong>1. Password Strength Checker</strong></p>
+            <p>Create a React component <code>PasswordStrength.js</code>. Allow the user to enter a password. When they click <strong>Check Strength</strong>:</p>
+            <ul>
+              <li>If the password is shorter than 6 characters &rarr; Show: <strong>Weak password</strong></li>
+              <li>If it's 6 or more characters and contains a number &rarr; Show: <strong>Strong password</strong></li>
+            </ul>
+            <div class="hints">
+              <p>Hints:</p>
+              <ul>
+                <li>Use <code>useState()</code> to track password and result message.</li>
+                <li>Check string length with <code>.length</code></li>
+                <li>Use regex like <code>/\d/</code> to detect numbers.</li>
+                <li>Show the result in a paragraph below the input.</li>
+              </ul>
+            </div>
+
+            <p><strong>2. Toggle Course Description</strong></p>
+            <p>In a component named <code>CourseToggle.js</code>, create a button labelled "Show Description". When the user clicks it:</p>
+            <ul>
+              <li>Display the course description: <em>This course covers React fundamentals including components, JSX, and props.</em></li>
+              <li>When clicked again, hide the description.</li>
+            </ul>
+            <div class="hints">
+              <p>Hints:</p>
+              <ul>
+                <li>Use <code>useState()</code> to toggle between "show" and "hide"</li>
+                <li>Use a boolean state variable (e.g., <code>isVisible</code>)</li>
+                <li>Use a button click event to change the state</li>
+                <li>Use <code>{isVisible &amp;&amp; &lt;p&gt;...&lt;/p&gt;}</code> to conditionally show content</li>
+              </ul>
+            </div>
           </div>
         </div>
         <p><em>Select each tab to learn more.</em></p>
@@ -256,7 +606,7 @@
 
         <p><strong>1. Manage Courses and Learners</strong></p>
         <ul>
-          <li><code>GET /courses</code> → Fetch all available courses</li>
+          <li><code>GET /courses</code> → Fetch all available courses (see <a href="Section2_Sample_Output.png">Section2_Sample_Output.png</a> for the expected JSON &mdash; React for Beginners, Intro to Data Science, AI Fundamentals)</li>
           <li><code>POST /enroll</code> → Enroll a user in a course</li>
           <li><code>GET /user/:id/courses</code> → View user progress</li>
         </ul>
@@ -324,7 +674,7 @@ const PORT = 5000;
             <li>Access data via <code>req.body.userId</code> and <code>req.body.courseId</code></li>
             <li>Use <code>res.json()</code> to send a JSON response</li>
             <li>Don't forget to use <code>express.json()</code> middleware (already included above)</li>
-            <li>The output should resemble the reference image linked on the assignment page.</li>
+            <li>The output should resemble the reference image: <a href="Section2_Task1.png">Section2_Task1.png</a>.</li>
           </ul>
         </div>
 
@@ -337,7 +687,7 @@ const PORT = 5000;
             <li>Check if <code>req.body.userId</code> and <code>req.body.courseId</code> exist</li>
             <li>Use <code>res.status(400).json({ error: '...' })</code> to send error response</li>
             <li>Otherwise, proceed with the enrollment confirmation</li>
-            <li>The output should resemble the reference image linked on the assignment page.</li>
+            <li>The output should resemble the reference image: <a href="Section2_Task2.png">Section2_Task2.png</a>.</li>
           </ul>
         </div>
         <p><em>Select each tab to learn more.</em></p>
@@ -351,13 +701,192 @@ const PORT = 5000;
         <div class="accordion-item">
           <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> MySQL</button>
           <div class="accordion-body">
-            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+            <p><strong>Objective:</strong></p>
+            <p>This section guides users through MySQL database operations using Command Prompt. It covers creating a database, creating tables, inserting sample data, and performing basic CRUD operations. Users will also complete tasks such as adding instructors and enrolling new users to reinforce hands-on SQL skills in a learning management system (LMS) context.</p>
+
+            <p><strong>Step 1: Access Command Prompt</strong></p>
+            <ul>
+              <li>Press <code>Windows + R</code>, type <code>cmd</code>, and press <strong>Enter</strong> OR</li>
+              <li>Click the Start Menu &gt; search "<code>Command Prompt</code>" &gt; Open</li>
+              <li>To open as admin (recommended), right-click and select "<code>Run as administrator</code>"</li>
+            </ul>
+
+            <p><strong>Step 2: Navigate to MySQL Bin Folder</strong></p>
+            <ul>
+              <li>Type this command (adjust if your MySQL is in a different folder): <code>cd "C:\Program Files\MySQL\MySQL Server 8.0\bin"</code></li>
+            </ul>
+
+            <p><strong>Step 3: Log Into MySQL</strong></p>
+            <p>Type the following command:</p>
+            <pre><code>mysql -u root -p</code></pre>
+            <p>Enter the <strong>root password</strong> when prompted.</p>
+
+            <p><strong>Step 4: Create and Use a Database</strong></p>
+            <pre><code>CREATE DATABASE lms_db;
+USE lms_db;</code></pre>
+
+            <p><strong>Table 1: Users</strong></p>
+            <pre><code>CREATE TABLE users ( user_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100) UNIQUE, password VARCHAR(255) );</code></pre>
+            <p><strong>Table 2: Courses</strong></p>
+            <pre><code>CREATE TABLE courses ( course_id INT AUTO_INCREMENT PRIMARY KEY, course_name VARCHAR(100), description TEXT );</code></pre>
+            <p><strong>Table 3: Enrollments</strong></p>
+            <pre><code>CREATE TABLE enrollments ( enrollment_id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, course_id INT, enrollment_date DATE, FOREIGN KEY (user_id) REFERENCES users(user_id), FOREIGN KEY (course_id) REFERENCES courses(course_id) );</code></pre>
+            <p><strong>Table 4: Assessments</strong></p>
+            <pre><code>CREATE TABLE assessments ( assessment_id INT AUTO_INCREMENT PRIMARY KEY, course_id INT, title VARCHAR(100), max_score INT, FOREIGN KEY (course_id) REFERENCES courses(course_id) );</code></pre>
+
+            <p><strong>Step 2: Insert Sample Data</strong></p>
+            <pre><code>INSERT INTO users (name, email, password) VALUES ('Alice Johnson', 'alice@example.com', 'alice123'), ('Bob Smith', 'bob@example.com', 'bob123'), ('Charlie Lee', 'charlie@example.com', 'charlie123');</code></pre>
+            <p>Insert Courses</p>
+            <pre><code>INSERT INTO courses (course_name, description) VALUES ('HTML Basics', 'Introduction to HTML and web structure.'), ('CSS Design', 'Learn how to style websites using CSS.'), ('MySQL for Beginners', 'Basic concepts of relational databases.');</code></pre>
+            <p>Insert Enrollments</p>
+            <pre><code>INSERT INTO enrollments (user_id, course_id, enrollment_date) VALUES (1, 1, '2024-01-10'), (1, 3, '2024-02-05'), (2, 2, '2024-02-15'), (3, 1, '2024-03-01');</code></pre>
+            <p>Insert Assessments</p>
+            <pre><code>INSERT INTO assessments (course_id, title, max_score) VALUES (1, 'HTML Quiz 1', 100), (2, 'CSS Midterm', 80), (3, 'MySQL Final Test', 90);</code></pre>
+
+            <p><strong>Step 3: CRUD Examples</strong></p>
+            <p><strong>Read Data (SELECT)</strong></p>
+            <pre><code>SELECT * FROM users;</code></pre>
+            <pre><code>SELECT u.name, c.course_name FROM enrollments e JOIN users u ON e.user_id = u.user_id JOIN courses c ON e.course_id = c.course_id WHERE u.user_id = 1;</code></pre>
+            <p><strong>Update Data (UPDATE)</strong></p>
+            <pre><code>UPDATE users SET email = 'alice.new@example.com' WHERE user_id = 1;</code></pre>
+            <p><strong>Delete Data (DELETE)</strong></p>
+            <pre><code>DELETE FROM enrollments WHERE enrollment_id = 2;</code></pre>
+
+            <h3 style="color:var(--accent)">Now, perform the below tasks:</h3>
+
+            <p><strong>1. Create a new table named <code>instructors</code>:</strong></p>
+            <ul>
+              <li><code>instructor_id</code> (Primary Key, auto-increment)</li>
+              <li><code>name</code> (varchar)</li>
+              <li><code>email</code> (unique)</li>
+            </ul>
+            <div class="hints">
+              <p>Hint:</p>
+              <ul>
+                <li>Use <code>CREATE TABLE</code> with <code>AUTO_INCREMENT</code> and <code>UNIQUE</code>.</li>
+                <li>Use <code>INSERT INTO</code> to add entries.</li>
+              </ul>
+            </div>
+
+            <p><strong>2. Enroll new user Daniel Rose (<code>daniel1@lms.com, password: daniel123</code>) in "CSS Design"</strong></p>
+            <ul>
+              <li>Add this user to the <code>users</code> table</li>
+              <li>Enroll him in the "CSS Design" course with today's date</li>
+              <li>Write a query to display all users enrolled in "CSS Design"</li>
+            </ul>
+            <div class="hints">
+              <p>Hint:</p>
+              <ul>
+                <li>Find the <code>course_id</code> for "CSS Design" from the courses table.</li>
+                <li>Use INSERT INTO enrollments with correct user_id and course_id</li>
+                <li>Use <code>JOIN</code> to link all users, enrollments and courses.</li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="accordion-item">
           <button class="accordion-btn" aria-expanded="false"><span class="chev">▶</span> Mongo DB</button>
           <div class="accordion-body">
-            <div class="note">This sub-tab's expanded content wasn't visible in the source screenshot (it needs to be clicked open on the original page to capture). Open it there and share a screenshot to have it added here.</div>
+            <p><strong>Objective:</strong></p>
+            <p>Understand how to use MongoDB as a NoSQL database to design and manage a backend for a School Information System. Learners will model real-world entities such as schools, courses, and enrollments using Mongoose schemas, establish relationships through ObjectId references, and build RESTful APIs with Express.js.</p>
+
+            <p><strong>Instructions and Installation</strong></p>
+            <ol>
+              <li>MongoDB compass: <a href="https://www.mongodb.com/try/download/compass" target="_blank" rel="noopener">https://www.mongodb.com/try/download/compass</a></li>
+              <li><strong>Select Version</strong>
+                <ul>
+                  <li><strong>Platform:</strong> Choose your OS: Windows (.exe or .msi), macOS (.dmg)</li>
+                  <li><strong>Edition:</strong> Choose "Stable"</li>
+                  <li>Click <strong>Download</strong></li>
+                </ul>
+              </li>
+              <li><strong>Install MongoDB Compass</strong>
+                <ul>
+                  <li><em>On Windows:</em> double-click the downloaded .exe/.msi file, follow the installer prompts (Next &rarr; Accept &rarr; Install)</li>
+                  <li><em>On macOS:</em> open the .dmg file, drag MongoDB Compass to your Applications folder</li>
+                </ul>
+              </li>
+              <li><strong>Launch MongoDB Compass</strong> &mdash; open the app from your system menu or Applications folder.</li>
+              <li><strong>Connect to MongoDB</strong> &mdash; if running locally, use <code>mongodb://localhost:27017</code></li>
+            </ol>
+            <p>You can now: view databases and collections, insert/edit/delete documents, run queries and aggregations, and visually explore your data.</p>
+
+            <p><strong>Steps for integrating MongoDB with backend</strong></p>
+            <p><strong>Step 1: Create the Project structure</strong></p>
+            <pre><code>cd Section3_Mongodb
+cd Back_end
+npm init -y
+npm install express mongoose cors</code></pre>
+            <p>This sets up a basic backend with MongoDB support.</p>
+
+            <p><strong>Step 2: Create file structure</strong></p>
+            <pre><code>FULLSTACK/
+└── backend/
+    ├── server.js          # Main Express server
+    ├── models/
+    │   ├── schoolModel.js      # Mongoose schema for school
+    │   ├── courseModel.js      # Mongoose schema for course
+    │   └── enrollmentModel.js  # Mongoose schema for enrollment
+    ├── routes/
+    │   ├── schoolRoutes.js     # /api/school route handlers
+    │   ├── courseRoutes.js     # /api/course route handlers
+    │   └── enrollmentRoutes.js # /api/enrollment route handlers
+    └── package.json        # NPM config (scripts, dependencies, etc.)</code></pre>
+
+            <p><strong>Step 3: Connect MongoDB in server.js</strong> &nbsp; <strong>Step 4: Create the Mongoose Model</strong> &nbsp; <strong>Step 5: Create the Routes</strong> &nbsp; <strong>Step 6: Run your backend</strong> &nbsp; <strong>Step 7: Test your APIs</strong></p>
+
+            <p><strong>Setup Instructions:</strong></p>
+            <ol>
+              <li><strong>Download &amp; Unzip:</strong> get the file: <code>MongoDB.zip</code> (now extracted at <a href="MongoDB/School-System/Backend/">MongoDB/School-System/Backend/</a>) &mdash; the full starter backend (<code>server.js</code>, <code>models/</code>, <code>routes/</code>, <code>public/</code>).</li>
+              <li><strong>Paste School Data in MongoDB Compass</strong> &ndash; School Collection (<code>schoolsystem.schools</code>)
+                <pre><code>{
+  "_id": { "$oid": "665f1fa4a7d3f1a0aabc1001" },
+  "name": "Greenwood High School",
+  "address": "123 Maple Street, Springfield",
+  "principal": "Mr. John Adams"
+}
+{
+  "_id": { "$oid": "665f1fa4a7d3f1a0aabc1002" },
+  "name": "Riverside Public School",
+  "address": "456 Oak Avenue, Riverdale",
+  "principal": "Ms. Linda Carter"
+}</code></pre>
+              </li>
+              <li>In the similar way add Course (<code>courseModel.js</code>) and Enrollment (<code>enrollmentModel.js</code>) data in MongoDB Compass</li>
+              <li><strong>Create models and routes for school:</strong> the full code for this file is included in <a href="MongoDB/School-System/Backend/models/schoolModel.js">backend/models/schoolModel.js</a> and <a href="MongoDB/School-System/Backend/routes/schoolRoutes.js">backend/routes/schoolRoutes.js</a></li>
+              <li><strong>Create models and routes for course:</strong> the full code for this file is included in <a href="MongoDB/School-System/Backend/models/courseModel.js">backend/models/courseModel.js</a> and <a href="MongoDB/School-System/Backend/routes/courseRoutes.js">backend/routes/courseRoutes.js</a></li>
+              <li><strong>Create models and routes for enrolment:</strong> the full code for this file is included in <a href="MongoDB/School-System/Backend/models/enrollmentModel.js">backend/models/enrollmentModel.js</a> and <a href="MongoDB/School-System/Backend/routes/enrollmentRoutes.js">backend/routes/enrollmentRoutes.js</a></li>
+            </ol>
+
+            <p><strong>Steps for connecting models and routes with Server.js (Main Express server)</strong></p>
+            <p><strong>Step 1: Install dependencies</strong></p>
+            <pre><code>npm init -y
+npm install express mongoose</code></pre>
+            <p><strong>Step 2: Create Server.js</strong> (the full code for this file is included in <a href="MongoDB/School-System/Backend/server.js">backend/server.js</a>)</p>
+            <p><strong>Replace &lt;username&gt;, &lt;password&gt;, and mydatabase with your MongoDB Atlas credentials</strong> (or use <code>mongodb://localhost:27017/schoolSystem</code> to run fully locally, as the starter <code>server.js</code> does).</p>
+            <p><strong>Step 3: Run the server</strong></p>
+            <pre><code>node server.js</code></pre>
+            <p><strong>YOU MUST SEE</strong> &ndash; see <a href="MongoDB_Output.pdf">MongoDB_Output.pdf</a> for the full reference screenshots:</p>
+            <pre><code>MongoDB connected
+Server running on port 5000</code></pre>
+            <p><strong>TO VIEW ALL USERS</strong></p>
+            <pre><code>curl http://localhost:5000/api/users</code></pre>
+
+            <h3 style="color:var(--accent)">Now perform the below task:</h3>
+            <p><strong>1. Create a new entry in 'school' in MongoDB database and insert a document with the following parameter:</strong></p>
+            <ul>
+              <li>"_id"</li>
+              <li>"name"</li>
+              <li>"address"</li>
+              <li>"principal"</li>
+            </ul>
+            <div class="hints">
+              <p>Hint:</p>
+              <ul>
+                <li>Use MongoDB Compass</li>
+                <li>Use "ADD DATA"</li>
+              </ul>
+            </div>
           </div>
         </div>
         <p><em>Select each tab to learn more.</em></p>

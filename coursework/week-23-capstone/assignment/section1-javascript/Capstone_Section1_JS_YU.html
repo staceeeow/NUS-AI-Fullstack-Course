@@ -2,62 +2,88 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AI-Powered LMS - JavaScript</title>
+<title>AI LMS - Module 5: JavaScript Interactivity</title>
 <style>
-  body { font-family: sans-serif; max-width: 500px; margin: 40px auto; }
-  section { margin-bottom: 40px; }
-  .error { color: #c0392b; }
-  .success { color: #27ae60; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+    background-color: #f5f7fa;
+  }
+  .section {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 500px;
+  }
+  .section h2 { margin-top: 0; }
   input { padding: 6px; width: 100%; box-sizing: border-box; margin-bottom: 8px; }
+  button { padding: 8px 14px; }
 </style>
 </head>
 <body>
 
-<!-- Email Validation -->
-<section>
-  <h2>Sign Up</h2>
-  <form id="signupForm">
-    <label for="email">Email</label>
-    <input type="text" id="email" name="email" placeholder="you@example.com">
-    <button type="submit">Sign Up</button>
-  </form>
-  <p id="emailMessage"></p>
-</section>
+<h1>AI-Powered LMS: JavaScript Practice</h1>
 
-<!-- Input Event Handling -->
-<section>
-  <h2>Live Preview</h2>
-  <label for="courseName">Course Name</label>
-  <input type="text" id="courseName" placeholder="Type a course name...">
-  <p>You are viewing: <strong id="coursePreview">(nothing yet)</strong></p>
-</section>
+<!-- 1. Enroll in Course (starter behaviour) -->
+<div class="section">
+  <h2>1. Enroll in Course</h2>
+  <button onclick="enrollInCourse()">Click to Enroll</button>
+</div>
+
+<!-- 2. AI Suggestion Box (starter behaviour) -->
+<div class="section">
+  <h2>2. AI Suggestion Box</h2>
+  <p>Click the button below to get a course suggestion.</p>
+  <button onclick="getSuggestion()">Get AI Suggestion</button>
+  <p id="suggestionOutput"></p>
+</div>
+
+<!-- 3. Validate Learner Email -->
+<div class="section">
+  <h2>3. Validate Learner Email</h2>
+  <input type="text" id="email" placeholder="Enter your email to receive updates">
+  <button onclick="return validateEmail()">Submit</button>
+  <p id="emailMessage"></p>
+</div>
+
+<!-- 4. Type Your Learning Goal -->
+<div class="section">
+  <h2>4. Type Your Learning Goal</h2>
+  <input type="text" id="goalInput" placeholder="e.g., Master JavaScript...">
+  <p id="goalOutput">Your goal:</p>
+</div>
 
 <script>
-  // Email validation: checks for "@", updates the DOM, handles form submit
-  const form = document.getElementById("signupForm");
-  const emailInput = document.getElementById("email");
-  const emailMessage = document.getElementById("emailMessage");
+  // 1. Enroll in Course (starter behaviour)
+  function enrollInCourse() {
+    alert("You have been enrolled in the 'JavaScript Essentials' course!");
+  }
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const email = emailInput.value.trim();
+  // 2. AI Suggestion Box (starter behaviour)
+  function getSuggestion() {
+    document.getElementById("suggestionOutput").textContent = "We recommend: 'Responsive Web Design' next!";
+  }
 
-    if (email.includes("@")) {
-      emailMessage.textContent = "Signed up successfully with " + email;
-      emailMessage.className = "success";
-    } else {
-      emailMessage.textContent = "Please enter a valid email address (must contain '@').";
-      emailMessage.className = "error";
+  // Task 1: complete validateEmail() - checks whether the input includes "@"
+  function validateEmail() {
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("emailMessage");
+
+    if (!email.includes("@")) {
+      message.textContent = "Invalid email address";
+      return false;
     }
-  });
 
-  // Input event handling: updates the preview dynamically as the user types
-  const courseNameInput = document.getElementById("courseName");
-  const coursePreview = document.getElementById("coursePreview");
+    message.textContent = "Email accepted!";
+    return false;
+  }
 
-  courseNameInput.addEventListener("input", (event) => {
-    const value = event.target.value.trim();
-    coursePreview.textContent = value === "" ? "(nothing yet)" : value;
+  // Task 2: update the goal output as the learner types
+  let goalInput = document.getElementById("goalInput");
+  goalInput.addEventListener('input', function () {
+    document.getElementById("goalOutput").textContent = "Your goal: " + goalInput.value;
   });
 </script>
 
